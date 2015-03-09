@@ -1,0 +1,98 @@
+@(partners: utils.Page[Partner], f: Form[dto.PartnerSearchData], managers: Seq[String], page: Int)
+
+@main("Task list") {
+    <div class="container-fluid">
+        @helper.form(action = routes.Application.partnersSearch(1), 'method -> "post", 'class -> "form-inline") {
+            <div class="form-group @if(f("ware").hasErrors) {has-error}">
+                <input type="number" class="form-control" id="ware" name="ware" value="@f("ware").value"
+                min="0" max="100" step="1" placeholder = "Ware#" title="Warehouse #"/>
+            </div>
+
+            <div class="form-group @if(f("year").hasErrors) {has-error}">
+                <input type="number" class="form-control" id="year" name="year" value="@f("year").value"
+                min="2000" max="2020" step="1" placeholder = "Year" title="Year for start"/>
+            </div>
+
+            <div class="form-group @if(f("psize").hasErrors) {has-error}">
+                <select id="psize" name="psize" class="form-control" title="Rows per page">
+                @for(s <- Seq(5, 20, 50, 100, 250)) {
+                    @if(s.toString == f("psize").value.getOrElse("50")) {
+                        <option value="@s" selected="selected">@s</option>
+                    } else {
+                        <option value="@s">@s</option>
+                    }
+                }
+                </select>
+            </div>
+
+            <div class="form-group @if(f("manager").hasErrors) {has-error}">
+                <select id="manager" name="manager" class="form-control" title="Manager">
+                    <option class="blank" value="">* All Managers</option>
+                    @for(s <- managers) {
+                        @if(s.equalsIgnoreCase(f("manager").value.getOrElse(""))) {
+                            <option value="@s" selected="selected">@s</option>
+                        } else {
+                            <option value="@s">@s</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group @if(f("date").hasErrors) {has-error}">
+                <input type="text" class="form-control date-picker" id="date" name="date" value="@f("date").value"
+                placeholder = "Date PP" title="PP date inclusive"/>
+            </div>
+
+            <div class="form-group">
+                <button id="submit" type="submit" value="Submit" class="btn btn-primary">Search</button>
+                @*<button id="cancel" type="reset" class="btn cancel">Reset</button>*@
+            </div>
+
+            <div class="form-group pull-right">
+                <p class="form-control-static text-right @if(partners.total > 0) {text-success} else {text-danger}">Found @partners.total record(s)</p>
+            </div>
+        }
+
+        <table class="table table-responsive table-striped-r2">
+            <thead>
+                <tr>
+                    <th>@Messages("partners.key")</th>
+                    <th>@Messages("partners.name")</th>
+                    @*<th>CP_1</th>*@
+                    <th>@Messages("partners.manager")</th>
+                    <th class="text-right">@Messages("partners.discount")</th>
+                    <th class="text-right">@Messages("partners.hold")</th>
+                    <th class="text-right">@Messages("partners.delay")</th>
+                    <th class="text-right">@Messages("partners.kredit")</th>
+                    <th class="text-right">@Messages("partners.not.paid")</th>
+                    <th class="text-right">@Messages("partners.t.nad")</th>
+                    <th class="text-right">@Messages("partners.u.summ")</th>
+                    @*<th>Prim</th>*@
+                    @*<th></th>*@
+                </tr>
+            </thead>
+            <tbody>
+            @partners.items.map { p =>
+                <tr>
+                    <td rowspan="2" class="text-uppercase text-success">@p.id</td>
+                    <td>@p.name</td>
+                    <td>@p.cp2</td>
+                    <td class="text-right">@p.skidka</td>
+                    <td class="text-right">@p.holding</td>
+                    <td class="text-right">@p.delay</td>
+                    <td class="text-right">@p.kredit</td>
+                    <td class="text-right dolg-color">@("%.2f".format(p.dolg.getOrElse(0.0)))</td>
+                    <td class="text-right">@("%.2f".format(p.tnad.getOrElse(0.0)))</td>
+                    <td class="text-right">@("%.2f".format(p.usumm.getOrElse(0.0)))</td>
+                </tr>
+                <tr>
+                    <td colspan="11">@(p.prim.getOrElse("") + " [ " + p.cp1.getOrElse("") + " ]")</td>
+                    @*<td colspan="4">@p.cp1</td>*@
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    @paginate(page, f.get.psize, partners.total, routes.Application.partnersPaged(f.get, _))
+}

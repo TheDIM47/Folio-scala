@@ -1,0 +1,37 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Tasks ( join_db_query )
+GET         /                      controllers.Application.index
+
+GET         /partners              controllers.Application.partners
+
+POST        /partners              controllers.Application.partnersSearch(page: Int)
+
+GET         /partners/:page        controllers.Application.partnersPaged(filter: PartnerSearchData, page: Int)
+
+GET         /partners/:manager/list controllers.Application.partnersOf(manager: String)
+
+GET         /managers              controllers.Application.managers
+
+GET         /nakls                 controllers.Application.nakls(filter: NaklSearchData)
+
+# POST  /partners           controllers.Application.searchTasks(page:Int ?= 1)
+# GET   /partners/:page     controllers.Application.pageTasks(sd:models.TaskSearchData, page:Int)
+# GET   /list               controllers.Notifications.list(page:Int=1)
+# GET   /list/help          controllers.Notifications.help
+# NOTE: /list/:page         MUST COME AFTER /list/[string] due to route priorities
+# GET   /list/:page         controllers.Notifications.list(page:Int)
+# GET   /task/new           controllers.Application.newTask
+# POST  /task/merge         controllers.Application.merge
+# GET   /task/:id/info      controllers.Application.taskInfo(id: Long)
+# GET   /task/:id/clone     controllers.Application.cloneTask(id: Long)
+# GET   /task/:id/delete    controllers.Application.delete(id: Long)
+# GET   /reqtypes           controllers.Application.reqtypes
+
+#----------------------------------------------------------------------------------------------------------
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file          controllers.Assets.at(path="/public", file)
+
+GET         /webjars/*file         controllers.WebJarAssets.at(file)

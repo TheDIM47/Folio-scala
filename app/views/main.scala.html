@@ -1,0 +1,75 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <meta charset='utf-8'/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+
+        <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))">
+        <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("font-awesome.min.css"))">
+        <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("datetimepicker.css"))">
+        <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("datepicker3.css"))">
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        <img alt="Brand" src="@routes.Assets.at("images/favicon.png")">
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="@routes.Application.partners">Partners</a></li>
+                        <li><a href="@routes.Application.managers">Manager</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        @content
+
+        <script type="text/javascript" src="@routes.WebJarAssets.at(WebJarAssets.locate("modernizr.min.js"))"></script>
+        <!--[if lt IE 9]>
+        <script type="text/javascript" src="@routes.WebJarAssets.at(WebJarAssets.locate("html5shiv.min.js"))"> </script>
+        <script type="text/javascript" src="@routes.WebJarAssets.at(WebJarAssets.locate("html5shiv-printshiv.min.js"))"> </script>
+        <script type="text/javascript" src="@routes.WebJarAssets.at(WebJarAssets.locate("respond.min.js"))"></script>
+        <![endif]-->
+        <script type="text/javascript" src="@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))"></script>
+        <script type="text/javascript" src="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))"></script>
+        <script type="text/javascript" src="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap-datepicker.js"))"></script>
+        <script type="text/javascript" src="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap-datetimepicker.min.js"))"></script>
+
+        <script type="text/javascript">
+        $(document).ready(function() {
+                $('.date-time-picker' ).datetimepicker({
+                    autoclose : true,
+                    todayHighlight : true,
+                    weekStart : 1,
+                    clearBtn : true,
+                    todayBtn : true,
+                    lang : 'ru',
+                    format : 'dd.mm.yyyy hh:ii:ss'
+                });
+
+                $ ('.date-picker').datepicker({
+                    autoclose : true,
+                    todayHighlight : true,
+                    weekStart : 1,
+                    clearBtn : true,
+                    todayBtn : true,
+                    lang : 'ru',
+                    format : 'dd.mm.yyyy'
+                });
+
+                $('[data-toggle="tooltip"]').tooltip();
+        });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,21 @@
+html {
+    background: #eee;
+}
+
+body {
+    padding-top: 70px;
+}
+
+.dolg-color {
+    color: #C0F;
+}
+
+.table-striped-r2 > tbody > tr:nth-child(4n+1) > td,
+.table-striped-r2 > tbody > tr:nth-child(4n+2) > td {
+    background-color: #f0f0f0;
+}
+
+.table-striped-r2 > tbody > tr:nth-child(4n+3) > td,
+.table-striped-r2 > tbody > tr:nth-child(4n+4) > td {
+    background-color: #ffffff;
+}

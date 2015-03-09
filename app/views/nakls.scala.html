@@ -1,0 +1,54 @@
+@(data: Seq[Nakl], f: Form[dto.NaklSearchData])
+
+@main("Nakl list") {
+    <div class="container-fluid">
+        <table class="table table-responsive table-striped-r2">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Org</th>
+                    <th>ppDate</th>
+                    <th>ppNum</th>
+                    <th>vozvrDate</th>
+                    <th>ctrlDate</th>
+                    <th>family</th>
+                    <th>corr</th>
+                    <th>osn</th>
+                    <th>otgrDate</th>
+                    <th>via</th>
+                    <th>sumPpor</th>
+                    <th>sumOpl</th>
+                    <th>sumPredm</th>
+                    <th>sumNalog</th>
+                </tr>
+            </thead>
+            <tbody>
+            @data.map { p =>
+                <tr>
+                    <td>@p.id</td>
+                    <td>@p.org</td>
+                    <td>@p.ppDate</td>
+                    <td>@p.ppNum</td>
+                    <td>@p.vozvrDate</td>
+                    <td>@p.ctrlDate</td>
+                    <td>@p.family</td>
+                    <td>@p.corr</td>
+                    <td>@p.osn</td>
+                    <td>@p.otgrDate</td>
+                    <td>@p.via</td>
+                    <td>@p.sumPpor</td>
+                    <td>@p.sumOpl</td>
+                    <td>@p.sumPredm</td>
+                    <td>@p.sumNalog</td>
+                    @*
+                    <td class="text-right dolg-color">@("%.2f".format(p.dolg.getOrElse(0.0)))</td>
+                    <td>@("%.2f".format(p.tnad.getOrElse(0.0)))</td>
+                    <td>@("%.2f".format(p.usumm.getOrElse(0.0)))</td>
+                    *@
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+}
